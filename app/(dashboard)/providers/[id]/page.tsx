@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import {
   ArrowLeft, Loader2, ShieldOff, ShieldCheck,
   CheckCircle, XCircle, Clock, CreditCard, RefreshCw,
-  Trash2, Users, Building2, FlaskConical, Pill,
+  Trash2, Users, Building2, FlaskConical, Pill, Pencil,
 } from "lucide-react";
 import {
   getProvider, blockProvider, unblockProvider, resetProviderSession,
   deleteProvider, reviewProvider, getProviderStaff, patchDoctorRecord,
-  updateStaffRole, updateStaffStatus, removeStaff,
+  updateStaffRole, updateStaffStatus, removeStaff, updateProviderTrial,
   isActive, formatDate, subscriptionLabel, providerDisplayName,
   type AdminProvider, type AdminStaff, type DoctorRecord, type PatientAppDiagnostic,
 } from "@/lib/api/providers";
@@ -68,6 +68,10 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
   const [busy, setBusy] = useState<string | null>(null);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
+  // Trial period edit
+  const [showTrialEdit, setShowTrialEdit] = useState(false);
+  const [trialInput, setTrialInput] = useState("");
+  const [trialBusy, setTrialBusy] = useState(false);
   // Doctor fix modal
   const [showFixDoctor, setShowFixDoctor] = useState(false);
   const [fixSpecialty, setFixSpecialty] = useState("");
@@ -168,6 +172,40 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
     if (!confirm(`Remove ${s.name} from this clinic?`)) return;
     await removeStaff(provider!.id, s.id);
     setStaff((prev) => prev.filter((m) => m.id !== s.id));
+  }
+
+  function toDatetimeLocal(iso: string | null | undefined): string {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return "";
+    const offset = d.getTimezoneOffset();
+    return new Date(d.getTime() - offset * 60000).toISOString().slice(0, 16);
+  }
+
+  async function handleTrialSave() {
+    if (!trialInput) return;
+    setTrialBusy(true);
+    try {
+      await updateProviderTrial(id, new Date(trialInput).toISOString());
+      flash("Trial period updated");
+      setShowTrialEdit(false);
+      const fresh = await getProvider(id);
+      setProvider(fresh);
+    } catch (e) { flash(`Error: ${(e as Error).message}`); }
+    finally { setTrialBusy(false); }
+  }
+
+  async function handleTrialClear() {
+    if (!confirm("Disable trial for this provider? They will lose free-trial access immediately.")) return;
+    setTrialBusy(true);
+    try {
+      await updateProviderTrial(id, null);
+      flash("Trial disabled");
+      setShowTrialEdit(false);
+      const fresh = await getProvider(id);
+      setProvider(fresh);
+    } catch (e) { flash(`Error: ${(e as Error).message}`); }
+    finally { setTrialBusy(false); }
   }
 
   if (loading) return <div className="flex justify-center pt-20"><Loader2 className="animate-spin text-indigo-600" size={24} /></div>;
@@ -290,6 +328,58 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
                   {subExpired ? "Expired" : provider.subscription_tier !== "basic" ? "Active" : "Free"}
                 </span>
               </div>
+              {provider.subscription_tier === "discovery" && (
+                <div className="flex items-start px-5 py-3 gap-4 border-b border-gray-50">
+                  <span className="text-xs font-semibold text-gray-400 uppercase w-32 flex-shrink-0 pt-0.5">Trial Expires</span>
+                  {!showTrialEdit ? (
+                    <div className="flex items-center gap-2 flex-1">
+                      <span className="text-sm text-gray-800">
+                        {provider.trial_expires_at
+                          ? formatDate(provider.trial_expires_at)
+                          : <span className="text-gray-400">Not set</span>}
+                      </span>
+                      <button
+                        onClick={() => { setTrialInput(toDatetimeLocal(provider.trial_expires_at)); setShowTrialEdit(true); }}
+                        className="ml-1 text-gray-400 hover:text-indigo-600 transition-colors"
+                        title="Edit trial period"
+                      >
+                        <Pencil size={12} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-2 flex-1">
+                      <input
+                        type="datetime-local"
+                        value={trialInput}
+                        onChange={(e) => setTrialInput(e.target.value)}
+                        className="border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-400 w-full max-w-xs"
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleTrialSave}
+                          disabled={trialBusy || !trialInput}
+                          className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-60"
+                        >
+                          {trialBusy ? <Loader2 size={11} className="animate-spin" /> : <CheckCircle size={11} />} Save
+                        </button>
+                        <button
+                          onClick={handleTrialClear}
+                          disabled={trialBusy}
+                          className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 disabled:opacity-60"
+                        >
+                          Disable
+                        </button>
+                        <button
+                          onClick={() => setShowTrialEdit(false)}
+                          className="text-xs font-semibold px-3 py-1.5 rounded-lg text-gray-500 hover:bg-gray-100"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="px-5 py-3"><p className="text-xs text-gray-400">{subscriptionLabel(provider)}</p></div>
             </SectionCard>
 

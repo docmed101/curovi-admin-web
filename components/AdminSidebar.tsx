@@ -14,6 +14,8 @@ import {
   CreditCard,
   Tag,
   SlidersHorizontal,
+  ClipboardList,
+  Bell,
 } from "lucide-react";
 import { useState } from "react";
 import { clearAdminToken } from "@/lib/auth";
@@ -37,6 +39,8 @@ const TOP_NAV = [
   { href: "/providers",    label: "Providers",    icon: Users },
   { href: "/patients",     label: "Patients",     icon: UserSquare },
   { href: "/appointments", label: "Appointments", icon: CalendarDays },
+  { href: "/notifications", label: "Notifications", icon: Bell },
+  { href: "/audit-logs",   label: "Audit Logs",   icon: ClipboardList },
   { href: "/config",       label: "App Config",   icon: Settings2 },
   { href: "/settings",     label: "Org Settings", icon: SlidersHorizontal },
 ];

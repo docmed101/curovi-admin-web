@@ -58,6 +58,7 @@ export interface AdminProvider {
   profile_status: string;
   subscription_tier: string;
   subscription_expires_at?: string | null;
+  trial_expires_at?: string | null;
   review_status: ReviewStatus;
   status: number;
   doctor_id?: number | null;
@@ -215,6 +216,13 @@ export async function resetProviderSession(id: number): Promise<{ message: strin
 
 export async function deleteProvider(id: number): Promise<{ message: string }> {
   return adminRequest(`/providers/${id}`, { method: "DELETE" });
+}
+
+export async function updateProviderTrial(id: number | string, trialExpiresAt: string | null): Promise<void> {
+  await adminRequest(`/providers/${id}/trial`, {
+    method: "PATCH",
+    body: JSON.stringify({ trial_expires_at: trialExpiresAt }),
+  });
 }
 
 // ── Staff ─────────────────────────────────────────────────────────────────────
