@@ -50,7 +50,7 @@ export default function ProvidersPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white gap-3 flex-wrap">
+      <div className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-gray-200 bg-white gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <h1 className="text-base font-bold text-gray-900">Providers</h1>
           <button
@@ -77,7 +77,7 @@ export default function ProvidersPage() {
               onKeyDown={handleSearchKey}
               onBlur={() => setSearch(searchInput)}
               placeholder="Name, mobile, or UID…"
-              className="pl-7 pr-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 w-44"
+              className="pl-7 pr-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 w-full md:w-44"
             />
           </div>
 
@@ -100,7 +100,7 @@ export default function ProvidersPage() {
       </div>
 
       {/* Table */}
-      <div className="flex-1 overflow-auto px-6 py-4">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-4">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />
@@ -108,7 +108,7 @@ export default function ProvidersPage() {
         ) : error ? (
           <p className="text-red-600 text-sm text-center pt-16">{error}</p>
         ) : (
-          <table className="w-full text-sm border-collapse">
+          <div className="overflow-x-auto"><table className="w-full text-sm border-collapse min-w-[900px]">
             <thead>
               <tr className="border-b border-gray-200">
                 {["Clinic / Lab / Pharmacy", "Owner / Mobile", "Type", "Specialty / Service", "Location", "Subscription", "Review", "Active", "Joined", ""].map((h) => (
@@ -126,7 +126,11 @@ export default function ProvidersPage() {
                 return (
                   <tr
                     key={p.id}
-                    className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+                    className={`border-b border-gray-100 cursor-pointer transition-colors ${
+                      p.review_status === "pending"
+                        ? "bg-amber-50/50 hover:bg-amber-50"
+                        : "hover:bg-gray-50"
+                    }`}
                     onClick={() => router.push(`/providers/${p.id}`)}
                   >
                     <td className="py-2.5 px-3">
@@ -150,7 +154,12 @@ export default function ProvidersPage() {
                     <td className="py-2.5 px-3 text-gray-600 text-xs">{city ?? "—"}</td>
                     <td className="py-2.5 px-3 text-gray-600 text-xs whitespace-nowrap">{subscriptionLabel(p)}</td>
                     <td className="py-2.5 px-3">
-                      {p.review_status ? (
+                      {p.review_status === "pending" ? (
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 animate-pulse">
+                          <span className="w-2 h-2 rounded-full bg-amber-500" />
+                          Pending
+                        </span>
+                      ) : p.review_status ? (
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${REVIEW_COLORS[p.review_status] ?? "bg-gray-100 text-gray-600"}`}>
                           {p.review_status}
                         </span>
@@ -165,7 +174,11 @@ export default function ProvidersPage() {
                     </td>
                     <td className="py-2.5 px-3 text-gray-400 text-xs whitespace-nowrap">{formatDate(p.createdAt)}</td>
                     <td className="py-2.5 px-3">
-                      <ChevronRight size={14} className="text-gray-400" />
+                      {p.review_status === "pending" ? (
+                        <span className="text-xs font-semibold text-indigo-600">Review →</span>
+                      ) : (
+                        <ChevronRight size={14} className="text-gray-400" />
+                      )}
                     </td>
                   </tr>
                 );
@@ -176,7 +189,7 @@ export default function ProvidersPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
     </div>

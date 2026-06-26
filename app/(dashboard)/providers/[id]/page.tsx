@@ -221,16 +221,18 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
     <>
       <div className="flex flex-col h-full overflow-hidden">
         {/* Header */}
-        <div className="flex items-center gap-3 px-6 py-3 border-b border-gray-200 bg-white flex-wrap">
-          <button onClick={() => router.back()} className="text-gray-400 hover:text-gray-700 transition-colors">
-            <ArrowLeft size={18} />
-          </button>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-base font-bold text-gray-900 truncate">
-              {providerDisplayName(provider)}
-              {provider.profile?.specialty && <span className="ml-2 text-xs font-normal text-gray-400">{provider.profile.specialty}</span>}
-            </h1>
-            <p className="text-xs text-gray-400">{provider.provider_uid} · +91 {provider.mobile}</p>
+        <div className="flex flex-col gap-3 px-4 md:px-6 py-3 border-b border-gray-200 bg-white">
+          <div className="flex items-center gap-3">
+            <button onClick={() => router.back()} className="text-gray-400 hover:text-gray-700 transition-colors flex-shrink-0">
+              <ArrowLeft size={18} />
+            </button>
+            <div className="min-w-0">
+              <h1 className="text-base font-bold text-gray-900 break-words">
+                {providerDisplayName(provider)}
+                {provider.profile?.specialty && <span className="ml-2 text-xs font-normal text-gray-400">{provider.profile.specialty}</span>}
+              </h1>
+              <p className="text-xs text-gray-400 break-all">{provider.provider_uid} · +91 {provider.mobile}</p>
+            </div>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
@@ -284,7 +286,7 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto px-6 py-6 space-y-5">
+        <div className="flex-1 overflow-auto px-4 md:px-6 py-6 space-y-5">
           {/* Review banner */}
           {reviewStyle && (
             <div className={`flex items-center gap-3 px-4 py-3 rounded-xl ${reviewStyle.bg}`}>
@@ -507,7 +509,7 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
 
                 {/* Doctor record summary */}
                 {provider.doctor_record && (
-                  <div className="mt-3 pt-3 border-t border-black/10 grid grid-cols-2 gap-x-6 gap-y-1 text-xs text-gray-600">
+                  <div className="mt-3 pt-3 border-t border-black/10 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1 text-xs text-gray-600">
                     <span><strong>Doctor UID:</strong> {provider.doctor_record.doctor_uid ?? "—"}</span>
                     <span><strong>Status:</strong> {provider.doctor_record.status === 1 ? "Active (1)" : `Inactive (${provider.doctor_record.status})`}</span>
                     <span><strong>Specialty:</strong> {provider.doctor_record.specialty || <em className="text-red-500">empty</em>}</span>
@@ -536,7 +538,7 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
             {staff.length === 0 ? (
               <div className="px-5 py-6 text-xs text-gray-400 text-center">No staff added yet</div>
             ) : (
-              <table className="w-full text-sm">
+              <div className="overflow-x-auto"><table className="w-full text-sm min-w-[560px]">
                 <thead>
                   <tr className="bg-gray-50 text-xs text-gray-500 font-semibold uppercase">
                     <th className="px-5 py-2.5 text-left">Name</th>
@@ -584,7 +586,7 @@ export default function ProviderDetailPage({ params }: { params: Promise<{ id: s
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
             )}
           </div>
         </div>

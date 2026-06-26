@@ -84,14 +84,14 @@ export default function SettingsPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-white">
+      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-white">
         <h1 className="text-base font-bold text-gray-900">Organisation Settings</h1>
         <p className="text-xs text-gray-500 mt-0.5">
           Global configuration for email delivery, billing, and other org-level options
         </p>
       </div>
 
-      <div className="flex-1 overflow-auto px-6 py-5 space-y-8">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-5 space-y-8">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />
@@ -119,7 +119,7 @@ export default function SettingsPage() {
                       : row.value;
 
                     return (
-                      <div key={row.key} className="flex items-start gap-4 px-5 py-3.5">
+                      <div key={row.key} className="flex flex-col gap-2 md:flex-row md:items-start md:gap-4 px-5 py-3.5">
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-semibold text-gray-800">{row.label}</p>
                           <p className="text-xs font-mono text-gray-400">{row.key}</p>
@@ -134,7 +134,7 @@ export default function SettingsPage() {
                               type={row.is_secret ? "password" : "text"}
                               value={editValue}
                               onChange={(e) => setEditValue(e.target.value)}
-                              className="border border-indigo-300 rounded-lg px-2.5 py-1 text-sm w-40 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm bg-white text-gray-900 w-full md:w-40 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                               autoFocus
                             />
                             <button
@@ -186,13 +186,13 @@ export default function SettingsPage() {
                     <p className="text-xs text-gray-400 mb-3">
                       Verify your SMTP settings by sending a test message.
                     </p>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2 sm:flex-row">
                       <input
                         type="email"
                         value={testEmail}
                         onChange={(e) => setTestEmail(e.target.value)}
                         placeholder="recipient@example.com"
-                        className="flex-1 border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="flex-1 border border-gray-300 rounded-lg px-3 py-1.5 text-sm bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                       <button
                         onClick={sendTestEmail}

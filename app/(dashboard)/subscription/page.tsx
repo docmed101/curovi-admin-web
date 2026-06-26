@@ -122,7 +122,7 @@ export default function SubscriptionPlansPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-white flex items-center justify-between">
+      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-white flex items-center justify-between flex-wrap gap-2">
         <div>
           <h1 className="text-base font-bold text-gray-900">Subscription Plans</h1>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -137,7 +137,7 @@ export default function SubscriptionPlansPage() {
         </button>
       </div>
 
-      <div className="flex-1 overflow-auto px-6 py-5 space-y-8">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-5 space-y-8">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />
@@ -246,7 +246,7 @@ export default function SubscriptionPlansPage() {
                     value={form.tier ?? ""}
                     onChange={(e) => setForm((f) => ({ ...f, tier: e.target.value }))}
                     placeholder="e.g. pro"
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-mono bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
@@ -254,7 +254,7 @@ export default function SubscriptionPlansPage() {
                   <select
                     value={form.provider_type ?? "doctor"}
                     onChange={(e) => setForm((f) => ({ ...f, provider_type: e.target.value as SubscriptionPlan["provider_type"] }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="doctor">Doctor</option>
                     <option value="lab">Lab</option>
@@ -269,7 +269,7 @@ export default function SubscriptionPlansPage() {
                   value={form.name ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder="e.g. Pro"
-                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -280,7 +280,7 @@ export default function SubscriptionPlansPage() {
                     type="number" min={0}
                     value={form.monthly_price ?? 0}
                     onChange={(e) => setForm((f) => ({ ...f, monthly_price: Number(e.target.value) }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
@@ -289,7 +289,7 @@ export default function SubscriptionPlansPage() {
                     type="number" min={0}
                     value={form.yearly_price ?? 0}
                     onChange={(e) => setForm((f) => ({ ...f, yearly_price: Number(e.target.value) }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -300,7 +300,7 @@ export default function SubscriptionPlansPage() {
                   type="number" min={0}
                   value={form.sort_order ?? 0}
                   onChange={(e) => setForm((f) => ({ ...f, sort_order: Number(e.target.value) }))}
-                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -312,7 +312,7 @@ export default function SubscriptionPlansPage() {
                     onChange={(e) => setFeatInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addFeature())}
                     placeholder="Add feature and press Enter"
-                    className="flex-1 border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="flex-1 border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                   <button onClick={addFeature} className="px-2.5 py-1.5 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 text-xs font-semibold">
                     Add

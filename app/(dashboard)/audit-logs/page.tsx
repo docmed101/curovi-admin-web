@@ -88,7 +88,7 @@ export default function AuditLogsPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-200 bg-white">
+      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between mb-3">
           <h1 className="text-base font-bold text-gray-900">Audit Logs</h1>
           <span className="text-xs text-gray-400">{total} total records</span>
@@ -108,7 +108,7 @@ export default function AuditLogsPage() {
             value={actorId}
             onChange={(e) => setActorId(e.target.value)}
             placeholder="Actor ID"
-            className="text-xs border border-gray-200 rounded px-2 py-1.5 outline-none w-24"
+            className="text-xs border border-gray-200 rounded px-2 py-1.5 outline-none w-full md:w-24"
           />
 
           <select
@@ -125,7 +125,7 @@ export default function AuditLogsPage() {
               value={resourceType}
               onChange={(e) => setResourceType(e.target.value)}
               placeholder="Resource type…"
-              className="text-xs outline-none w-32"
+              className="text-xs outline-none w-full md:w-32"
             />
           </div>
 
@@ -145,14 +145,14 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Table */}
-      <div className="flex-1 overflow-auto px-6 py-4">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-4">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />
           </div>
         ) : (
           <>
-            <table className="w-full text-sm border-collapse">
+            <div className="overflow-x-auto"><table className="w-full text-sm border-collapse min-w-[640px]">
               <thead>
                 <tr className="border-b border-gray-200">
                   {["Time", "Actor", "ID", "Action", "Resource", "Res. ID", "IP"].map((h) => (
@@ -178,7 +178,7 @@ export default function AuditLogsPage() {
                   <tr><td colSpan={7} className="py-12 text-center text-gray-400 text-sm">No audit logs found</td></tr>
                 )}
               </tbody>
-            </table>
+            </table></div>
 
             {logs.length < total && (
               <div className="flex justify-center mt-6">

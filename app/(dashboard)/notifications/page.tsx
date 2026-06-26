@@ -77,7 +77,7 @@ export default function NotificationsPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-gray-200 bg-white">
+      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between mb-3">
           <h1 className="text-base font-bold text-gray-900">Push Notification Logs</h1>
           <span className="text-xs text-gray-400">{total} total records</span>
@@ -99,7 +99,7 @@ export default function NotificationsPage() {
             value={recipientId}
             onChange={(e) => setRecipientId(e.target.value)}
             placeholder="Recipient ID"
-            className="text-xs border border-gray-200 rounded px-2 py-1.5 outline-none w-28 text-gray-900"
+            className="text-xs border border-gray-200 rounded px-2 py-1.5 outline-none w-full md:w-28 text-gray-900"
           />
 
           <div className="flex items-center gap-1 border border-gray-200 rounded px-2 py-1.5">
@@ -108,7 +108,7 @@ export default function NotificationsPage() {
               value={notificationType}
               onChange={(e) => setNotificationType(e.target.value)}
               placeholder="Type (e.g. new_booking)"
-              className="text-xs outline-none w-40 text-gray-900"
+              className="text-xs outline-none w-full md:w-40 text-gray-900"
             />
           </div>
 
@@ -138,14 +138,14 @@ export default function NotificationsPage() {
       </div>
 
       {/* Table */}
-      <div className="flex-1 overflow-auto px-6 py-4">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-4">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />
           </div>
         ) : (
           <>
-            <table className="w-full text-sm border-collapse">
+            <div className="overflow-x-auto"><table className="w-full text-sm border-collapse min-w-[700px]">
               <thead>
                 <tr className="border-b border-gray-200">
                   {["Time", "Status", "Recipient", "ID", "Type", "Title", "Body / Error"].map((h) => (
@@ -181,7 +181,7 @@ export default function NotificationsPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </table></div>
 
             {logs.length < total && (
               <div className="flex justify-center mt-6">

@@ -107,7 +107,7 @@ export default function CouponsPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-white flex items-center justify-between">
+      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-white flex items-center justify-between flex-wrap gap-2">
         <div>
           <h1 className="text-base font-bold text-gray-900">Discount Coupons</h1>
           <p className="text-xs text-gray-500 mt-0.5">Create and manage subscription discount codes</p>
@@ -120,7 +120,7 @@ export default function CouponsPage() {
         </button>
       </div>
 
-      <div className="flex-1 overflow-auto px-6 py-5">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-5">
         {loading ? (
           <div className="flex justify-center pt-16"><Loader2 className="animate-spin text-indigo-600" size={24} /></div>
         ) : error ? (
@@ -128,8 +128,8 @@ export default function CouponsPage() {
         ) : coupons.length === 0 ? (
           <p className="text-gray-400 text-sm text-center pt-16">No coupons yet. Click &quot;New Coupon&quot; to create one.</p>
         ) : (
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-            <table className="w-full text-sm">
+          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden overflow-x-auto">
+            <table className="w-full text-sm min-w-[700px]">
               <thead>
                 <tr className="border-b border-gray-100 text-xs text-gray-500 font-semibold uppercase tracking-wider">
                   <th className="px-4 py-3 text-left">Code</th>
@@ -243,7 +243,7 @@ export default function CouponsPage() {
                   value={form.code ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, code: e.target.value.toUpperCase() }))}
                   placeholder="e.g. WELCOME20"
-                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-mono uppercase focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-mono uppercase bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -253,7 +253,7 @@ export default function CouponsPage() {
                   value={form.description ?? ""}
                   onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                   placeholder="Internal note about this coupon"
-                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -263,7 +263,7 @@ export default function CouponsPage() {
                   <select
                     value={form.discount_type ?? "percentage"}
                     onChange={(e) => setForm((f) => ({ ...f, discount_type: e.target.value as "percentage" | "flat" | "months_free" }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="percentage">Percentage (%)</option>
                     <option value="flat">Flat amount (₹)</option>
@@ -282,7 +282,7 @@ export default function CouponsPage() {
                     type="number" min={0}
                     value={form.discount_value ?? 0}
                     onChange={(e) => setForm((f) => ({ ...f, discount_value: Number(e.target.value) }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -294,7 +294,7 @@ export default function CouponsPage() {
                     type="number" min={0}
                     value={form.min_amount ?? 0}
                     onChange={(e) => setForm((f) => ({ ...f, min_amount: Number(e.target.value) }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
@@ -304,7 +304,7 @@ export default function CouponsPage() {
                     value={form.max_uses ?? ""}
                     onChange={(e) => setForm((f) => ({ ...f, max_uses: e.target.value ? Number(e.target.value) : null }))}
                     placeholder="unlimited"
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -316,7 +316,7 @@ export default function CouponsPage() {
                     type="date"
                     value={form.valid_from ?? ""}
                     onChange={(e) => setForm((f) => ({ ...f, valid_from: e.target.value || null }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
@@ -325,7 +325,7 @@ export default function CouponsPage() {
                     type="date"
                     value={form.expires_at ?? ""}
                     onChange={(e) => setForm((f) => ({ ...f, expires_at: e.target.value || null }))}
-                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -379,7 +379,7 @@ export default function CouponsPage() {
                   value={tiersInput}
                   onChange={(e) => setTiersInput(e.target.value)}
                   placeholder="e.g. pro, enterprise, lab_pro"
-                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-mono bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
                 <p className="text-[10px] text-gray-400 mt-1">Leave blank to allow on all plans</p>
               </div>

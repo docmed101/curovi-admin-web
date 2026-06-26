@@ -50,14 +50,14 @@ export default function ConfigPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-white">
+      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-white">
         <h1 className="text-base font-bold text-gray-900">App Configuration</h1>
         <p className="text-xs text-gray-500 mt-0.5">
           Feature flags and settings that control the patient and provider apps
         </p>
       </div>
 
-      <div className="flex-1 overflow-auto px-6 py-5 space-y-6">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-5 space-y-6">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />
@@ -75,7 +75,7 @@ export default function ConfigPage() {
                 </h2>
                 <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-100">
                   {rows.map((row) => (
-                    <div key={row.key} className="flex items-start gap-4 px-5 py-3.5">
+                    <div key={row.key} className="flex flex-col gap-2 md:flex-row md:items-start md:gap-4 px-5 py-3.5">
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-mono font-medium text-gray-800">
                           {row.key}
@@ -89,7 +89,7 @@ export default function ConfigPage() {
                           <input
                             value={editValue}
                             onChange={(e) => setEditValue(e.target.value)}
-                            className="border border-indigo-300 rounded-lg px-2.5 py-1 text-sm w-32 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm bg-white text-gray-900 w-full md:w-32 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             autoFocus
                           />
                           <button

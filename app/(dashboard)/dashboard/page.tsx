@@ -48,10 +48,10 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200 bg-white">
+      <div className="px-4 md:px-6 py-4 border-b border-gray-200 bg-white">
         <h1 className="text-base font-bold text-gray-900">Dashboard</h1>
       </div>
-      <div className="flex-1 overflow-auto px-6 py-6">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-6">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />

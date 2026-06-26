@@ -36,7 +36,7 @@ export default function AppointmentsPage() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white">
+      <div className="flex items-center justify-between flex-wrap gap-2 px-4 md:px-6 py-4 border-b border-gray-200 bg-white">
         <h1 className="text-base font-bold text-gray-900">Appointments</h1>
         <input
           type="date"
@@ -46,13 +46,13 @@ export default function AppointmentsPage() {
         />
       </div>
 
-      <div className="flex-1 overflow-auto px-6 py-4">
+      <div className="flex-1 overflow-auto px-4 md:px-6 py-4">
         {loading ? (
           <div className="flex justify-center pt-16">
             <Loader2 className="animate-spin text-indigo-600" size={24} />
           </div>
         ) : (
-          <table className="w-full text-sm border-collapse">
+          <div className="overflow-x-auto"><table className="w-full text-sm border-collapse min-w-[480px]">
             <thead>
               <tr className="border-b border-gray-200">
                 {["ID", "Date", "Session", "Status", "Created"].map((h) => (
@@ -78,7 +78,7 @@ export default function AppointmentsPage() {
                 <tr><td colSpan={5} className="py-12 text-center text-gray-400 text-sm">No appointments for this date</td></tr>
               )}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
     </div>

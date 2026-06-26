@@ -17,8 +17,9 @@ import {
   ClipboardList,
   Bell,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { clearAdminToken } from "@/lib/auth";
+import { useSidebar } from "@/app/(dashboard)/layout";
 
 const MASTER_TABLES = [
   { key: "diagnoses",      label: "Diagnoses" },
@@ -52,8 +53,13 @@ function cn(...classes: (string | boolean | undefined)[]) {
 export function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { open, close } = useSidebar();
   const [masterOpen, setMasterOpen] = useState(pathname.startsWith("/master"));
   const [subOpen, setSubOpen] = useState(pathname.startsWith("/subscription"));
+
+  useEffect(() => {
+    close();
+  }, [pathname]);
 
   function logout() {
     clearAdminToken();
@@ -61,7 +67,14 @@ export function AdminSidebar() {
   }
 
   return (
-    <aside className="w-56 flex-shrink-0 bg-gray-900 text-gray-300 flex flex-col h-full">
+    <aside
+      className={cn(
+        "fixed inset-y-0 left-0 z-40 w-56 bg-gray-900 text-gray-300 flex flex-col h-full",
+        "transform transition-transform duration-200 ease-in-out",
+        open ? "translate-x-0" : "-translate-x-full",
+        "md:static md:translate-x-0 md:flex-shrink-0"
+      )}
+    >
       {/* Logo */}
       <div className="h-14 flex items-center px-5 border-b border-gray-700">
         <span className="text-white font-bold text-sm tracking-tight">
