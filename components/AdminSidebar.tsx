@@ -16,6 +16,8 @@ import {
   SlidersHorizontal,
   ClipboardList,
   Bell,
+  BookOpen,
+  FlaskConical,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { clearAdminToken } from "@/lib/auth";
@@ -38,6 +40,8 @@ const SUBSCRIPTION_ITEMS = [
 const TOP_NAV = [
   { href: "/dashboard",    label: "Dashboard",    icon: LayoutDashboard },
   { href: "/providers",    label: "Providers",    icon: Users },
+  { href: "/master-catalog",  label: "Master Catalog",  icon: FlaskConical },
+  { href: "/catalog-reviews", label: "Catalog Reviews", icon: BookOpen },
   { href: "/patients",     label: "Patients",     icon: UserSquare },
   { href: "/appointments", label: "Appointments", icon: CalendarDays },
   { href: "/notifications", label: "Notifications", icon: Bell },
